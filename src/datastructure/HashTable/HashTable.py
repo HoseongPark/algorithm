@@ -1,7 +1,7 @@
 """
 Hash Table 구현
-1. 해쉬함수: key % 8
-2. 해쉬 키 생성 : hash(data)
+1. 해쉬 키 생성 : key % count
+2. 해쉬 값 생성 : hash(data)
 """
 
 class hashTable:
