@@ -42,11 +42,19 @@ class hashTable:
         return self.hashTable[key]
 
 
+    # HashTable 출력
+    def descTable(self):
+        print("---------- Start Print HashTable ----------")
+        for idx in self.hashTable:
+            print(idx)
+        print("---------- End Print HashTable   ----------")
+
+
 if __name__ == "__main__":
 
     table = hashTable(10)
-    table.saveData("hoseong", '01033875381')
-    table.saveData("hohoho", "0105555888")
+    table.saveData("hoseong", '01023456784')
+    table.saveData("hohoho", "01055558884")
 
 
     print(table.readData("hoseong"))
