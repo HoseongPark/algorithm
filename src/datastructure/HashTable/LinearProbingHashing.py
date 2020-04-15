@@ -1,20 +1,23 @@
 """
-HashTable 에서 충돌(Collision) 발생시 해결법 1
-충돌 발생시 링크드 리스트 자료구조를 활용하여 데이터를 추가로 연결시켜 저장하는 방법
-링크드리스트에 저장시 어떤 Key에대한 Value인지 알기위해 해쉬값(Hash Value)와 데이터(Data)를 동시에 저장한다.
+HashTable 에서 충돌(Collision) 발생시 해결법 2
+충돌 발생시 HashTable을 순차적으로 순회하여 빈공간의 Slot을 확인후 저장한다
+내부 자료구조를 이용하여 처리.
+Data를 저장할시 [hashData, Data] 로 저장하여야 한다.
+ -> 충돌시 같은 값인지 아닌지 확인하기 위해서.
 """
 
 """
 Hash Table 구현
-1. 해쉬함수: SHA-256
+1. 해쉬함수: key % 10
 2. 해쉬 키 생성 : hash(data)
-"""
 
+"""
 import hashlib
 
 class hashTable:
 
     def __init__(self, count):
+        self.count = count
         self.hashTable = self._createTable(count)
 
 
@@ -35,42 +38,46 @@ class hashTable:
     
     # HashData 에대한 Key값 생성
     def _getKey(self, hashData):
-        key = hashData % 8
+        key = hashData % self.count
         return key
 
 
     # Key, Value로 데이터 저장
-    # Key 충돌시 Open Chaining 방법으로 해결
+    # Key 충돌시 Linear Probing Hashing 방법으로 해결
     def saveData(self, keyData, data):
         hashData = self._getHash(keyData)
         key = self._getKey(hashData)
 
-        if (self.hashTable[key] != 0):
-            for idx in range(len(self.hashTable[key])):
-                if (self.hashTable[key][idx][0] == hashData):
-                    self.hashTable[key][idx][1] = data
+        if self.hashTable[key] != 0:
+            for index in range(key, len(self.hashTable)):
+                if self.hashTable[index] == 0:
+                    self.hashTable = [hashData, data]
                     return
-            
-            self.hashTable[key].append([hashData, data])
+
+                elif self.hashTable[index][0] == hashData:
+                    self.hashTable[index][1] = data
+                    return
 
         else:
-            self.hashTable[key] = [[hashData, data]]
+            self.hashTable[key] = [hashData, data]
 
 
     # Key 값으로 Data 추출
-    # Key 충돌시 Open Chaining 방법으로 해결
+    # Key 충돌시 Linear Probing Hashing 방법으로 해결
     def readData(self, keyData):
         hashData = self._getHash(keyData)
         key = self._getKey(hashData)
 
-        if (self.hashTable[key] != 0):
-            for idx in range(len(self.hashTable[key])):
-                if (self.hashTable[key][idx][0] == hashData) :
-                    return self.hashTable[key][idx][1]
+        if self.hashTable[key] != 0:
+            for index in range(key, len(self.hashTable)):
+                if self.hashTable[index][0] == hashData:
+                    return self.hashTable[index][1]
 
                 else:
                     return None
-        return None
+
+        else:
+            return None
 
 
     # HashTable 출력
@@ -83,10 +90,10 @@ class hashTable:
 
 if __name__ == "__main__":
 
-    table = hashTable(10)
+    table = hashTable(50)
 
-    table.saveData("ho", "01024567894")
-    table.saveData("ha", "01078965418")
+    table.saveData("ho", "11111111")
+    table.saveData("ha", "22222222")
     table.descTable()
 
-    print(table.readData("haha"))
+    print(table.readData("ha"))
