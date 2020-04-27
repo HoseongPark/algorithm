@@ -36,14 +36,15 @@ class Heap:
             self.heap.append(None)
             self.heap.append(data)
 
-        self.heap.append(data)
+        else:
+            self.heap.append(data)
 
-        currentIndex = len(self.heap) - 1
+            currentIndex = len(self.heap) - 1
 
-        while self._movingiUp(currentIndex):
-            parentIndex = currentIndex // 2
-            self.heap[currentIndex], self.heap[parentIndex] = self.heap[parentIndex], self.heap[currentIndex]
-            currentIndex = parentIndex
+            while self._movingiUp(currentIndex):
+                parentIndex = currentIndex // 2
+                self.heap[currentIndex], self.heap[parentIndex] = self.heap[parentIndex], self.heap[currentIndex]
+                currentIndex = parentIndex
 
         return True
 
