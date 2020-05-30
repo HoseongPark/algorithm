@@ -11,4 +11,5 @@
   * problem (Algorithm Problem) 백준온라인저지 (https://www.acmicpc.net/)
   
 ## 자료구조 & 알고리즘 설명
+FastCampus 알고리즘 / 기술면접 관련 강의를 들은후 정리.
 - https://www.notion.so/hoseongpark/Computer-Science-f888efca058042439e2821084f69500b
